@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apelsin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        nav a {
+            color: #0056b3;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            padding: 5px 10px;
+        }
+        nav a:hover, nav a:focus {
+            color: #fff;
+            background-color: #0056b3;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: auto;
+            background-color: #033b78;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        .image-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .image-card img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+        .image-card p {
+            margin: 0 10px 10px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .images-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+    <a href="/main">Home</a>
+    <a href="/meal"> Recipes</a>
+    <a href="/nutrition">Nutrition</a>
+    <a href="/food-images">Food</a>
+    <a href="/logout">Logout</a>
+</nav>
+    <h1>Food Images</h1>
+    <div class="images-grid">
+        <% images.forEach(image => { %>
+            <div class="image-card">
+                <img src="<%= image.src %>" alt="Food image">
+                <p>Photo by <%= image.photographer %></p>
+            </div>
+        <% }) %>
+    </div>
+    
+    <footer>
+        © 2024 Apelsin by Anelya Nauruzova. Group number IT-2204.
+    </footer>
+</body>
+</html>

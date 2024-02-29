@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apelsin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        nav a {
+            color: #0c2f54;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            padding: 5px 10px;
+        }
+        nav a:hover, nav a:focus {
+            color: #fff;
+            background-color: #0c2f54;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: auto;
+            background-color: #033b78;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        #nutritionDetails {
+            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            max-width: 80%;
+        }
+        #nutritionDetails h1, #nutritionDetails p {
+            margin-bottom: 10px;
+        }
+        form {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        }
+        input[type="text"] {
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px; 
+        width: 300px; 
+        outline: none; 
+        }
+        button {
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        border: none;
+        padding: 10px 20px;
+        background-color: #0c2f54;
+        color: white;
+        cursor: pointer;
+        border-radius: 0 5px 5px 0;
+        transition: background-color 0.3s ease; 
+        }
+        button:hover {
+        background-color: #091e35;
+        }
+        @media (max-width: 768px) {
+        form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        input[type="text"] {
+            border-radius: 5px 5px 0 0; 
+            width: auto;
+        }
+
+        button {
+            border-radius: 0 0 5px 5px;
+        }
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        p {
+            text-align: center;
+            margin-top: 15px;
+            color:rgb(33, 24, 80);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/main">Home</a>
+        <a href="/meal"> Recipes</a>
+        <a href="/nutrition">Nutrition</a>
+        <a href="/food-images">Food</a>
+        <a href="/logout">Logout</a>
+    </nav>
+
+    <div id="nutritionDetails">
+        <h1>Nutrition Facts Search</h1>
+        <p> Tell me what you eat, and I will tell you what you are.</p>
+        <form action="/nutrition" method="get">
+            <input type="text" name="foodSearch" placeholder="Enter food item">
+            <button type="submit">Search</button>
+        </form>
+
+        <% if (food) { %>
+            <h2>Results:</h2>
+            <p>Food Name: <%= food.description %></p>
+            <p>Calories: <%= food.foodNutrients.find(n => n.nutrientName === 'Energy').value %> kcal</p>
+            <p>Fat: <%= food.foodNutrients.find(n => n.nutrientName.toLowerCase().includes('fat')).value %> g</p>
+            <!-- Display more nutrients as needed -->
+        <% } %>
+        <% if (error) { %>
+            <p>Error: <%= error %></p>
+        <% } %>
+    </div>
+
+    <footer>
+        © 2024 Apelsin by Anelya Nauruzova. Group number IT-2204.
+    </footer>
+</body>
+</html>

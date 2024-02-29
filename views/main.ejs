@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page - Apelsin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        nav a {
+            color: #0c2f54;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            padding: 5px 10px;
+        }
+        nav a:hover, nav a:focus {
+            color: #fff;
+            background-color: #0056b3;
+            border-radius: 5px;
+        }
+        h1 {
+        text-align: center;
+        margin: 40px auto;
+        width: 80%;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #0c2f54;
+        text-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+        }
+        .carousel {
+        position: relative;
+        max-width: 90%;
+        margin: auto;
+        height: 500px;
+        }
+
+        .carousel-inner {
+        border-radius: 0 0 8px 8px; 
+        overflow: hidden;
+        }
+        .carousel-inner img {
+        max-height: 500px; 
+        width: 100%; 
+        object-fit: cover; 
+        border-radius: 0 0 8px 8px;
+        }
+.carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5); 
+    padding: 15px; 
+    text-align: center;
+    color: white; 
+}
+
+.carousel-indicators li {
+    background-color: #0c2f54; 
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 35px;
+    height: 35px;
+    opacity: 0.7; 
+    transition: opacity 0.3s ease;
+}
+
+.btn-danger,
+button {
+    background-color: #0c2f54;
+    border: none;
+    padding: 10px 15px; 
+    border-radius: 5px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover,
+button:hover {
+    background-color: rgb(11, 79, 151);
+}
+
+
+.forms-container {
+    display: flex;
+    justify-content: space-around; 
+    flex-wrap: wrap;
+}
+
+.add-image-form, .edit-image-form {
+    flex: 1; 
+    min-width: 250px; 
+    max-width: 500px; 
+    margin: 10px;
+}
+    
+    form {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px auto;
+        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        width: 90%;
+        max-width: 500px;
+    }
+    form input, form textarea, form button {
+        margin: 10px 0;
+    }
+    footer {
+        margin-top: auto;
+        background-color: #0c2f54;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+    }
+    @media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    form {
+        width: 90%; 
+    }
+
+    .carousel {
+        max-width: 95%; 
+    }
+
+    h1 {
+        font-size: 2rem; 
+    }
+    }
+    h2 {
+    color: #0c2f54; 
+    margin: 20px 0; 
+    text-align: center; 
+    font-weight: 600;
+    }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/main">Home</a>
+    <a href="/meal">Recipes</a>
+    <a href="/nutrition">Nutrition</a>
+    <a href="/food-images">Food</a>
+    <a href="/logout">Logout</a>
+</nav>
+<h1>Traditional Kazakh Food</h1>
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <% images.forEach((image, index) => { %>
+                <li data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>"></li>
+            <% }); %>
+        </ol>
+        <div class="carousel-inner">
+            <% images.forEach((image, index) => { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                    <img src="<%= image.url %>" class="d-block w-100" alt="<%= image.name %>">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5><%= image.name %></h5>
+                        <p><%= image.description %></p>
+                        <% if (isAdmin) { %>
+                            <a href="/delete-image/<%= image._id %>" class="btn btn-danger">Delete</a>
+                            <button onclick="populateEditForm('<%= image._id %>', '<%= image.name %>', '<%= image.url %>', '<%= image.description %>')">Edit</button>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+<% if (isAdmin) { %>
+<div class="forms-container">
+    <div class="add-image-form">
+    <h2>Add Image</h2>
+    <form action="/add-image" method="POST">
+        Name: <input type="text" name="name" required><br>
+        URL: <input type="text" name="url" required><br>
+        Description: <textarea name="description" required></textarea><br>
+        <button type="submit">Add Image</button>
+    </form>
+    </div>
+    <div class="edit-image-form">
+    <h2>Edit Image</h2>
+    <form id="editImageForm" action="/edit-image" method="POST">
+        <input type="hidden" name="id" required>
+        Name: <input type="text" name="name" required><br>
+        URL: <input type="text" name="url" required><br>
+        Description: <textarea name="description" required></textarea><br>
+        <button type="submit">Edit Image</button>
+    </form>
+    </div>
+</div>
+<% } %>
+<footer>
+    © 2024 Apelsin by Anelya. All rights reserved.
+</footer>
+    
+    <script>
+        function populateEditForm(id, name, url, description) {
+
+            document.querySelector('#editImageForm [name="id"]').value = id;
+            document.querySelector('#editImageForm [name="name"]').value = name;
+            document.querySelector('#editImageForm [name="url"]').value = url;
+            document.querySelector('#editImageForm [name="description"]').innerText = description;
+            document.getElementById('editFormContainer').style.display = 'block';
+        }
+        </script>
+        
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
